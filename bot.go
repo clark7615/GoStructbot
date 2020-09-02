@@ -24,7 +24,7 @@ func checkStruct(spec interface{}) (*reflect.Value, error) {
 }
 
 func getTag(elem *reflect.Value) (out []ConfigureFileType) {
-	ft := []ConfigureFileType{Json, Yaml, Xml, Env}
+	ft := []ConfigureFileType{Yaml, Json, Env, Xml}
 	field := elem.Type().Field(0).Tag
 	for _, typeId := range ft {
 		if _, ok := field.Lookup(typeId.getTagString()); ok {

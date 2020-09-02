@@ -32,11 +32,11 @@ func TestCheckStruct(t *testing.T) {
 
 func TestGetTag(t *testing.T) {
 	j := struct {
-		Id int `env:"id" json:"id"`
+		Id int `env:"id" json:"id" yaml:"id" xml:"id"`
 	}{}
 	elem, _ := checkStruct(&j)
 	value := getTag(elem)
 	for _, fileType := range value {
-		t.Log(fileType)
+		t.Log(fileType.getTagString())
 	}
 }
