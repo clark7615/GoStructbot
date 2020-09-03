@@ -1,3 +1,3 @@
-module git.championtek.com.tw/go/systemconfigbot
+module git.championtek.com.tw/go/structbot
 
-go 1.14
+go 1.15

@@ -1,4 +1,4 @@
-package sysconfigbot
+package structbot
 
 import (
 	"errors"
@@ -23,6 +23,7 @@ func checkStruct(spec interface{}) (*reflect.Value, error) {
 	return &s, nil
 }
 
+//TODO 更換命名 因為現在不只讀取 設定檔
 func getTag(elem *reflect.Value) (out []ConfigureFileType) {
 	ft := []ConfigureFileType{Yaml, Json, Env, Xml}
 	field := elem.Type().Field(0).Tag

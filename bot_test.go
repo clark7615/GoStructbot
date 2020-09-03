@@ -1,4 +1,4 @@
-package sysconfigbot
+package structbot
 
 import (
 	"testing"
