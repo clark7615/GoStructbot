@@ -1,14 +1,19 @@
 package structbot
 
-type ConfigureFileType int
+type SerializationType int
 
 const (
-	Json ConfigureFileType = iota
+	Json SerializationType = iota
 	Yaml
 	Xml
 	Env
 )
 
-func (c ConfigureFileType) getTagString() string {
-	return [...]string{"json", "yaml", "xml", "env"}[c]
+func (s SerializationType) getTagString() string {
+	return [...]string{"json", "yaml", "xml", "env"}[s]
 }
+
+func (s SerializationType) String() string {
+	return [...]string{"Json", "Yaml", "Xml", "Env"}[s]
+}
+

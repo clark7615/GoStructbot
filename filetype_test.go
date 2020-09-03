@@ -5,7 +5,7 @@ import "testing"
 func TestConfigureFileType_String(t *testing.T) {
 	tests := []struct {
 		name string
-		c    ConfigureFileType
+		c    SerializationType
 		want string
 	}{
 		{
