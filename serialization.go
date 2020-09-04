@@ -7,6 +7,7 @@ const (
 	Yaml
 	Xml
 	Env
+	Unknown
 )
 
 func (s SerializationType) getTagString() string {
@@ -16,4 +17,3 @@ func (s SerializationType) getTagString() string {
 func (s SerializationType) String() string {
 	return [...]string{"Json", "Yaml", "Xml", "Env"}[s]
 }
-
