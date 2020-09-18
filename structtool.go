@@ -34,25 +34,25 @@ func getTag(elem *reflect.Value) (out []SerializationType) {
 	return out
 }
 
-func validData(data []byte, sType []SerializationType) (SerializationType, error) {
+func validData(data []byte, sType []SerializationType) SerializationType {
 	for _, s := range sType {
 		switch s {
 		case Yaml:
 			if err := yaml.Unmarshal(data, &struct{}{}); err != nil {
-				return Unknown, err
+				continue
 			}
-			return Yaml, nil
+			return Yaml
 		case Json:
 			if json.Valid(data) {
-				return Json, nil
+				return Json
 			}
-			return Unknown, nil
+			continue
 		case Xml:
 			if err := xml.Unmarshal(data, &struct{}{}); err != nil {
-				return Unknown, err
+				continue
 			}
-			return Xml, nil
+			return Xml
 		}
 	}
-	return Unknown, errors.New("解析錯誤")
+	return Unknown
 }

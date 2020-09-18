@@ -17,10 +17,7 @@ func (*Bot) MakeStruct(str string, out interface{}) error {
 		return err
 	}
 	tag := getTag(value)
-	data, err := validData(b, tag)
-	if err != nil {
-		return err
-	}
+	data := validData(b, tag)
 	switch data {
 	case Yaml:
 		if err := yaml.Unmarshal(b, out); err != nil {
