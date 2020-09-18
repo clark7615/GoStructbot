@@ -84,7 +84,7 @@ func Test_getTag(t *testing.T) {
 			args: args{
 				elem: tal,
 			},
-			wantOut: []SerializationType{Yaml, Json, Xml, Env},
+			wantOut: []SerializationType{Json, Yaml, Xml, Env},
 		},
 	}
 	for _, tt := range tests {

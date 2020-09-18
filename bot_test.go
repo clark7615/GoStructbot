@@ -9,7 +9,7 @@ type TestStruct struct {
 
 func TestBot_MakeStruct(t *testing.T) {
 	type args struct {
-		str string
+		str interface{}
 		out interface{}
 	}
 	tests := []struct {
@@ -20,17 +20,17 @@ func TestBot_MakeStruct(t *testing.T) {
 		{
 			name: "Yaml make struct test",
 			args: args{
-				str: `
+				str: []byte(`
 id: 1
 data: test
-`,
+`),
 				out: &TestStruct{},
 			},
 			wantErr: false,
 		}, {
 			name: "Json make struct test",
 			args: args{
-				str: `{"id":1,"data":"test"}`,
+				str: []byte(`{"id":1,"data":"test"}`),
 				out: &TestStruct{},
 			},
 			wantErr: false,
@@ -49,8 +49,7 @@ data: test
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			bo := &Bot{}
-			if err := bo.MakeStruct(tt.args.str, tt.args.out); (err != nil) != tt.wantErr {
+			if err := MakeStruct(tt.args.str, tt.args.out); (err != nil) != tt.wantErr {
 				t.Errorf("MakeStruct() error = %v, wantErr %v", err, tt.wantErr)
 			}
 			check := tt.args.out.(*TestStruct)
