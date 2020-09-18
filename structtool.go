@@ -24,7 +24,7 @@ func checkStruct(spec interface{}) (*reflect.Value, error) {
 }
 
 func getTag(elem *reflect.Value) (out []SerializationType) {
-	ft := []SerializationType{Yaml, Json, Xml, Env}
+	ft := []SerializationType{Json, Yaml, Xml, Env}
 	field := elem.Type().Field(0).Tag
 	for _, typeId := range ft {
 		if _, ok := field.Lookup(typeId.getTagString()); ok {

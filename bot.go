@@ -3,6 +3,7 @@ package structbot
 import (
 	"encoding/json"
 	"encoding/xml"
+	"errors"
 
 	"gopkg.in/yaml.v3"
 )
@@ -16,8 +17,7 @@ func (*Bot) MakeStruct(str string, out interface{}) error {
 	if err != nil {
 		return err
 	}
-	tag := getTag(value)
-	data := validData(b, tag)
+	data := validData(b, getTag(value))
 	switch data {
 	case Yaml:
 		if err := yaml.Unmarshal(b, out); err != nil {
@@ -31,6 +31,8 @@ func (*Bot) MakeStruct(str string, out interface{}) error {
 		if err := xml.Unmarshal(b, out); err != nil {
 			return err
 		}
+	default:
+		return errors.New("input data can not be unmarshal,Please confirm the struct and tag")
 	}
 	return nil
 }
