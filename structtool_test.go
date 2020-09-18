@@ -84,7 +84,7 @@ func Test_getTag(t *testing.T) {
 			args: args{
 				elem: tal,
 			},
-			wantOut: []SerializationType{Yaml, Json, Xml, Env},
+			wantOut: []SerializationType{Json, Yaml, Xml, Env},
 		},
 	}
 	for _, tt := range tests {
@@ -102,10 +102,9 @@ func Test_validData(t *testing.T) {
 		s    []SerializationType
 	}
 	tests := []struct {
-		name    string
-		args    args
-		want    SerializationType
-		wantErr bool
+		name string
+		args args
+		want SerializationType
 	}{
 		{
 			name: "One Tag Testing Json",
@@ -113,8 +112,7 @@ func Test_validData(t *testing.T) {
 				data: []byte(`{"id":1}`),
 				s:    []SerializationType{Json},
 			},
-			want:    Json,
-			wantErr: false,
+			want: Json,
 		},
 		{
 			name: "One Tag Testing Yaml",
@@ -122,8 +120,7 @@ func Test_validData(t *testing.T) {
 				data: []byte(`id: 1`),
 				s:    []SerializationType{Yaml, Json},
 			},
-			want:    Yaml,
-			wantErr: false,
+			want: Yaml,
 		},
 		{
 			name: "One Tag Testing Xml",
@@ -131,25 +128,19 @@ func Test_validData(t *testing.T) {
 				data: []byte(`<Test></Test>`),
 				s:    []SerializationType{Xml},
 			},
-			want:    Xml,
-			wantErr: false,
+			want: Xml,
 		}, {
 			name: "Unknown Testing Xml in json and yaml",
 			args: args{
 				data: []byte(`<Test></Test>`),
 				s:    []SerializationType{Json, Yaml},
 			},
-			want:    Unknown,
-			wantErr: false,
+			want: Unknown,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := validData(tt.args.data, tt.args.s)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("validData() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
+			got := validData(tt.args.data, tt.args.s)
 			if got != tt.want {
 				t.Errorf("validData() got = %v, want %v", got, tt.want)
 			}

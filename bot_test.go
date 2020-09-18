@@ -1,35 +1,61 @@
 package structbot
 
-import (
-	"testing"
-)
+import "testing"
+
+type TestStruct struct {
+	ID   int    `json:"id" yaml:"id" xml:"id"`
+	Data string `json:"data" yaml:"data" xml:"data"`
+}
 
 func TestBot_MakeStruct(t *testing.T) {
 	type args struct {
-		out Test
+		str interface{}
+		out interface{}
 	}
-	var tests = []struct {
-		name string
-		Str string
-		args args
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
 	}{
 		{
-			name: "SetStruct",
-			Str: `{"id":1,"text":"test"}`,
+			name: "Yaml make struct test",
 			args: args{
-				out: Test{},
+				str: []byte(`
+id: 1
+data: test
+`),
+				out: &TestStruct{},
 			},
+			wantErr: false,
+		}, {
+			name: "Json make struct test",
+			args: args{
+				str: []byte(`{"id":1,"data":"test"}`),
+				out: &TestStruct{},
+			},
+			wantErr: false,
+		}, {
+			name: "Xml make struct test",
+			args: args{
+				str: `
+<root>
+   <data>test</data>
+   <id>1</id>
+</root>`,
+				out: &TestStruct{},
+			},
+			wantErr: false,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			bo := &Bot{}
-			bo.MakeStruct(tt.Str,&tt.args.out)
-			if tt.args.out.ID != 1{
-				t.Fatal("Set struct error")
+			if err := MakeStruct(tt.args.str, tt.args.out); (err != nil) != tt.wantErr {
+				t.Errorf("MakeStruct() error = %v, wantErr %v", err, tt.wantErr)
 			}
-			if tt.args.out.Text != "test"{
-				t.Fatal("Set struct error")
+			check := tt.args.out.(*TestStruct)
+			if check.ID != 1 || check.Data != "test" {
+				t.Errorf("MakeStruct() error ID = %v, want %v ,Data = %v want %v",
+					check.ID, 1, check.Data, "test")
 			}
 		})
 	}
