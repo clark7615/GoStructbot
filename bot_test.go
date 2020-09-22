@@ -45,6 +45,16 @@ data: test
 				out: &TestStruct{},
 			},
 			wantErr: false,
+		}, {
+			name: "Map make struct test",
+			args: args{
+				str: map[string]interface{}{
+					"id":   1,
+					"data": "test",
+				},
+				out: &TestStruct{},
+			},
+			wantErr: false,
 		},
 	}
 	for _, tt := range tests {
