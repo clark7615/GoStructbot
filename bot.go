@@ -4,14 +4,14 @@ import (
 	"encoding/json"
 	"encoding/xml"
 	"errors"
-	"io/ioutil"
-	"reflect"
 
 	"gopkg.in/yaml.v3"
 )
 
-func FileMakeStruct(filePath string, out interface{}) error {
-	b, err := ioutil.ReadFile(filePath)
+//FileMakeStruct從./config/config.yaml讀取檔案並轉為struct
+//此路徑為強迫存在要使用本功能請按照規定建立資料夾以及yaml檔案
+func FileMakeStruct(out interface{}) error {
+	b, err := readConfigFile()
 	if err != nil {
 		return err
 	}
@@ -19,6 +19,8 @@ func FileMakeStruct(filePath string, out interface{}) error {
 	return err
 }
 
+//MakeStruct將支援的資料型態輸入後可自動賦植給struct
+//支援Json、Yaml、Xml輸出的struct必須事先填入相應的TAG才能正常的賦值
 func MakeStruct(src interface{}, out interface{}) error {
 	b, err := interface2Bytea(src)
 	if err != nil {
@@ -46,19 +48,4 @@ func MakeStruct(src interface{}, out interface{}) error {
 		return errors.New("input data can not be unmarshal,Please confirm the struct and tag")
 	}
 	return nil
-}
-
-func interface2Bytea(src interface{}) (out []byte, err error) {
-	s := reflect.ValueOf(src).Kind()
-	switch s {
-	case reflect.Slice:
-		out = src.([]byte)
-	case reflect.String:
-		out = []byte(src.(string))
-	case reflect.Map:
-		out, _ = json.Marshal(src)
-	default:
-		return out, errors.New("input data not []byte or string")
-	}
-	return out, err
 }
