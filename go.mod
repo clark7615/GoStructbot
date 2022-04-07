@@ -1,4 +1,4 @@
-module git.championtek.com.tw/go/structbot
+module gitlab.com/champinfo/go/structbot
 
 go 1.15
 

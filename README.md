@@ -7,7 +7,7 @@ Champ StructBot
 安裝
 ---
 ```shell script
-$ go get git.championtek.com.tw/go/structbot
+$ go get gitlab.com/champinfo/go/structbot
 ```
 或者編輯您專案中的go.mod檔案
 ```
@@ -16,7 +16,7 @@ module your_project_name
 go 1.15.1
 
 require (
-    git.championtek.com.tw/go/champiris vx.x.x
+    gitlab.com/champinfo/go/champiris vx.x.x
 )
 ```
 
@@ -37,7 +37,7 @@ StructBot會依照您在struct中填入的tag自動地幫你分配解析的資�
 
 ```go
 import (
-	"git.championtek.com.tw/go/structbot"
+	"gitlab.com/champinfo/go/structbot"
 )
 
 const (
